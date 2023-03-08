@@ -1,5 +1,4 @@
-using API.Data;
-using Microsoft.EntityFrameworkCore;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
+// los mios
+builder.Services.AddAplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -22,16 +18,14 @@ builder.Services.AddSwaggerGen();
 
 
 
-
-
-
-
-
-
-
-
-
 var app = builder.Build();
+
+
+
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -42,7 +36,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+
+
+// debe ir entre UseRouting y Endpoint, y antes de Authorization y UseAuthentication
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+
+
+
+app.UseAuthentication();
 app.UseAuthorization();
+
+
+
 
 app.MapControllers();
 
