@@ -61,8 +61,8 @@ public class AppUser
     // .ProjectTo<MemberDto>(_mapper.ConfigurationProvider) en UserRepository
     // q es p' hacer + eficiente la busqueda en la db
     //
-    public int GetAge()
-    {
-        return DateOfBirth.CalculateAge();
-    }
+    //public int GetAge()
+    //{
+    //    return DateOfBirth.CalculateAge();
+    //}
 }

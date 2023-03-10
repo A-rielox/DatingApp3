@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,8 @@ public static class ApplicationServiceExtensions
 
 
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 
 
@@ -37,9 +40,7 @@ public static class ApplicationServiceExtensions
         //services.AddScoped<ILikesRepository, LikesRepository>();
         //services.AddScoped<IMessageRepository, MessageRepository>();
         //services.AddScoped<LogUserActivity>();
-        //services.AddScoped<IUserRepository, UserRepository>();
 
-        //services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
         return services;
     }
