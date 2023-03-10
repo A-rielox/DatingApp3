@@ -1,4 +1,6 @@
-﻿namespace API.Entities;
+﻿using API.Extensions;
+
+namespace API.Entities;
 
 public class AppUser
 {
@@ -12,19 +14,19 @@ public class AppUser
 
 
 
-    //public DateOnly DateOfBirth { get; set; }
-    //public string KnownAs { get; set; }
-    //public DateTime Created { get; set; } = DateTime.UtcNow;
-    //public DateTime LastActive { get; set; } = DateTime.UtcNow;
-    //public string Gender { get; set; }
-    //public string Introduction { get; set; }
-    //public string LookingFor { get; set; }
-    //public string Interests { get; set; }
-    //public string City { get; set; }
-    //public string Country { get; set; }
+    public DateOnly DateOfBirth { get; set; }
+    public string KnownAs { get; set; }
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+    public string Gender { get; set; }
+    public string Introduction { get; set; }
+    public string LookingFor { get; set; }
+    public string Interests { get; set; }
+    public string City { get; set; }
+    public string Country { get; set; }
 
     // relacion one-to-many ( un user many photos )
-    //public List<Photo> Photos { get; set; } = new();
+    public List<Photo> Photos { get; set; } = new();
     // el Photo hago
     // p'q ocupe la id del AppUser como foreign-key
     // public AppUser AppUser { get; set; }
@@ -59,8 +61,8 @@ public class AppUser
     // .ProjectTo<MemberDto>(_mapper.ConfigurationProvider) en UserRepository
     // q es p' hacer + eficiente la busqueda en la db
     //
-    //public int GetAge()
-    //{
-    //    return DateOfBirth.CalculateAge();
-    //}
+    public int GetAge()
+    {
+        return DateOfBirth.CalculateAge();
+    }
 }

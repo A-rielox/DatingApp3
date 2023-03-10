@@ -30,7 +30,6 @@ public class UsersController : BaseApiController
     ////////////////////////////////////////
     ////////////////////////////////////////
     //
-    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<AppUser>> GetUser(int id)
     {
