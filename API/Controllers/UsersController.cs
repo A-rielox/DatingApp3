@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -20,7 +21,8 @@ public class UsersController : BaseApiController
 
     ////////////////////////////////////////
     ////////////////////////////////////////
-    //
+    //      GET: api/users/
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
@@ -32,7 +34,7 @@ public class UsersController : BaseApiController
 
     ////////////////////////////////////////
     ////////////////////////////////////////
-    //
+    //      GET: api/users/username
     [HttpGet("{username}")]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {

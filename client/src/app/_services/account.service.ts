@@ -14,6 +14,11 @@ export class AccountService {
 
    constructor(private http: HttpClient) {}
 
+   setCurrentUser(user: User) {
+      this.currentUserSource.next(user);
+      localStorage.setItem('user', JSON.stringify(user));
+   }
+
    login(model: any) {
       return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
          map((res) => {
@@ -24,11 +29,6 @@ export class AccountService {
             }
          })
       );
-   }
-
-   setCurrentUser(user: User) {
-      this.currentUserSource.next(user);
-      localStorage.setItem('user', JSON.stringify(user));
    }
 
    logout() {
