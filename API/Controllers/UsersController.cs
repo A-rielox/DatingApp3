@@ -5,7 +5,6 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace API.Controllers;
 
@@ -160,7 +159,4 @@ public class UsersController : BaseApiController
 
         return BadRequest("Failed to delete the photo.");
     }
-
-
-
 }
