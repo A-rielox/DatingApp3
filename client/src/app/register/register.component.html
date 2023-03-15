@@ -30,11 +30,11 @@
    ></app-text-input>
 
    <!--              dateOfBirth -->
-   <!-- <app-date-picker
+   <app-date-picker
       [formControl]="$any(registerForm.controls['dateOfBirth'])"
       [label]="'Date Of Birth'"
       [maxDate]="maxDate"
-   ></app-date-picker> -->
+   ></app-date-picker>
 
    <!--              city -->
    <app-text-input
@@ -63,13 +63,13 @@
       [type]="'password'"
    ></app-text-input>
 
-   <!-- <div class="row" *ngIf="validationErrors">
+   <div class="row" *ngIf="validationErrors">
       <ul class="text-danger">
          <li *ngFor="let error of validationErrors">
             {{ error }}
          </li>
       </ul>
-   </div> -->
+   </div>
 
    <!--              botones -->
    <div class="text-center">
@@ -81,5 +81,5 @@
    </div>
 </form>
 
-<p>Form value: {{ registerForm.value | json }}</p>
-<p>Form status: {{ registerForm.status | json }}</p>
+<!-- <p>Form value: {{ registerForm.value | json }}</p>
+<p>Form status: {{ registerForm.status | json }}</p> -->

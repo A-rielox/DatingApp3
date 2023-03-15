@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
    AbstractControl,
    FormBuilder,
-   FormControl,
    FormGroup,
    ValidatorFn,
    Validators,
@@ -18,11 +17,10 @@ import { AccountService } from '../_services/account.service';
 })
 export class RegisterComponent implements OnInit {
    @Output() cancelRegister = new EventEmitter();
-   model: any = {};
    registerForm: FormGroup = new FormGroup({});
 
-   // maxDate: Date = new Date(); // inicializa con fecha y hora actual
-   // validationErrors: string[] | undefined;
+   maxDate: Date = new Date(); // inicializa con fecha y hora actual
+   validationErrors: string[] | undefined;
 
    constructor(
       private accountService: AccountService,
@@ -33,6 +31,7 @@ export class RegisterComponent implements OnInit {
 
    ngOnInit(): void {
       this.initializeForm();
+      this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
    }
 
    initializeForm() {
@@ -40,7 +39,7 @@ export class RegisterComponent implements OnInit {
          gender: ['male'],
          username: ['', Validators.required],
          knownAs: ['', Validators.required],
-         // dateOfBirth: ['', Validators.required],
+         dateOfBirth: ['', Validators.required],
          city: ['', Validators.required],
          country: ['', Validators.required],
          password: [
@@ -72,17 +71,20 @@ export class RegisterComponent implements OnInit {
    }
 
    register() {
-      console.log(this.registerForm?.value);
+      // p' dejar solo dia, mes y año en la date
+      const dob = this.getDateOnly(
+         this.registerForm.controls['dateOfBirth'].value
+      );
+      const values = { ...this.registerForm.value, dateOfBirth: dob };
 
-      // this.accountService.register(this.model).subscribe({
-      //    next: (res) => {
-      //       this.cancel(); // cierro el register form
-      //    },
-      //    error: (err) => {
-      //       console.log(err);
-      //       this.toastr.error(err.error + '  💩');
-      //    },
-      // });
+      this.accountService.register(values).subscribe({
+         next: () => {
+            this.router.navigateByUrl('/members');
+         },
+         error: (err) => {
+            this.validationErrors = err;
+         },
+      });
    }
 
    cancel() {
