@@ -6,6 +6,6 @@ export interface Pagination {
 }
 
 export class PaginatedResult<T> {
-   result?: T;
+   result?: T; // la lista d lo q pedi
    pagination?: Pagination;
 }

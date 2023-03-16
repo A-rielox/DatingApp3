@@ -7,7 +7,6 @@ import {
    Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class RegisterComponent implements OnInit {
 
    constructor(
       private accountService: AccountService,
-      private toastr: ToastrService,
       private fb: FormBuilder,
       private router: Router
    ) {}
@@ -47,7 +45,7 @@ export class RegisterComponent implements OnInit {
             [
                Validators.required,
                Validators.minLength(4),
-               Validators.maxLength(8),
+               Validators.maxLength(12),
             ],
          ],
          confirmPassword: [

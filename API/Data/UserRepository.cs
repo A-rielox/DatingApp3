@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -76,6 +77,27 @@ public class UserRepository : IUserRepository
     ////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     //
+    public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
+    {
+        var query = _context.Users.AsQueryable();
+
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+
+        query = query.Where(u => u.Gender == userParams.Gender);
+
+
+
+
+        var queryForPaging = query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
+
+        var pagedMembers = await PagedList<MemberDto>.CreateAsync(queryForPaging,
+                                                                  userParams.PageNumber,
+                                                                  userParams.PageSize);
+
+        return pagedMembers;
+    }
+
+    /*
     public async Task<IEnumerable<MemberDto>> GetMembersAsync()
     {
         var members = await _context.Users
@@ -84,6 +106,7 @@ public class UserRepository : IUserRepository
 
         return members;
     }
+    */
 
 
     ////////////////////////////////////////////////
