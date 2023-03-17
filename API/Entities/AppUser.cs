@@ -34,9 +34,10 @@ public class AppUser
     // asi las fotos quedan ligadas a un AppUser, y cuando se borre un user se van a borrar las fotos
     // el cascade delete
 
+
     ////////////////////////////
-    //public List<UserLike> LikedByUsers { get; set; } // los q te dan like
-    //public List<UserLike> LikedUsers { get; set; } // a quienes les doy like
+    public List<UserLike> LikedByUsers { get; set; } // los q te dan like
+    public List<UserLike> LikedUsers { get; set; } // a quienes les doy like
 
     // un SourceUser puede tener varios LikedUsers
     // un LikedUser puede tener varios LikedByUsers
