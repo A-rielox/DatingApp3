@@ -85,7 +85,6 @@ public class UserRepository : IUserRepository
 
         query = query.Where(u => u.Gender == userParams.Gender);
 
-
         // p' filtrar x la edad pasada
         var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
         var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
