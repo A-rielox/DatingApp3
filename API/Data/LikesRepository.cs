@@ -1,18 +1,25 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace API.Data;
 
 public class LikesRepository : ILikesRepository
 {
     private readonly DataContext _context;
+    private readonly IMapper _mapper;
 
-    public LikesRepository(DataContext context)
+    public LikesRepository(DataContext context,
+                           IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
 
@@ -31,7 +38,7 @@ public class LikesRepository : ILikesRepository
     ////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     //
-    public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
+    public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
     {
         // la lista de a quienes a dado like - userid = sourceuserid
         // la lista de quienes le han dado like - userid = likeduserid
@@ -39,22 +46,22 @@ public class LikesRepository : ILikesRepository
         var likes = _context.Likes.AsQueryable();
 
         // para los q este user ha dado like
-        if (predicate == "liked")
+        if (likesParams.Predicate == "liked")
         {
-            likes = likes.Where(l => l.SourceUserId == userId);
+            likes = likes.Where(l => l.SourceUserId == likesParams.UserId);
             // selecciona en "users" solo a los q estan en la lista "likes"
             users = likes.Select(l => l.TargetUser);
         }
 
         // los q le han dado like al user actual
-        if (predicate == "likedBy")
+        if (likesParams.Predicate == "likedBy")
         {
-            likes = likes.Where(l => l.TargetUserId == userId);
+            likes = likes.Where(l => l.TargetUserId == likesParams.UserId);
             // selecciona en "users" solo a los q estan en la lista "likes"
             users = likes.Select(l => l.SourceUser);
         }
 
-        var result = users.Select(u => new LikeDto
+        var likedUsers = users.Select(u => new LikeDto
         {
             UserName = u.UserName,
             KnownAs = u.KnownAs,
@@ -64,10 +71,11 @@ public class LikesRepository : ILikesRepository
             Id = u.Id,
         });
 
-        return await result.ToListAsync();
+        var pagedResult = await PagedList<LikeDto>
+                                .CreateAsync(likedUsers, likesParams.PageNumber,
+                                             likesParams.PageSize);
 
-        //return await PagedList<LikeDto>.CreateAsync(result, likesParams.PageNumber,
-        //                                            likesParams.PageSize);
+        return pagedResult;
     }
 
 
