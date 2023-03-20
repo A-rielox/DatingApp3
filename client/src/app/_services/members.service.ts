@@ -32,6 +32,9 @@ export class MembersService {
       });
    }
 
+   //////////////////////////////////////
+   //////////     PARAMS
+   //////////////////////////////////////
    getUserParams() {
       return this.userParams;
    }
@@ -50,6 +53,9 @@ export class MembersService {
       return;
    }
 
+   //////////////////////////////////////
+   //////////     USERS
+   //////////////////////////////////////
    getMember(username: string) {
       const member = [...this.memberCache.values()]
          .reduce((t, i) => {
@@ -101,6 +107,22 @@ export class MembersService {
       );
    }
 
+   //////////////////////////////////////
+   //////////     LIKES
+   //////////////////////////////////////
+   addLike(username: string) {
+      return this.http.post(this.baseUrl + 'likes/' + username, {});
+   }
+
+   getLikes(predicate: string) {
+      return this.http.get<Member[]>(
+         this.baseUrl + 'likes?predicate=' + predicate
+      );
+   }
+
+   //////////////////////////////////////
+   //////////     PAGINATIONS
+   //////////////////////////////////////
    private getPaginatedResult<T>(url: string, params: HttpParams) {
       const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
 
