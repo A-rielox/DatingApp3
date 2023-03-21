@@ -45,8 +45,8 @@ public class AppUser
 
     ////////////////////////////
 
-    //public List<Message> MessagesSent { get; set; }
-    //public List<Message> MessagesReceived { get; set; }
+    public List<Message> MessagesSent { get; set; }
+    public List<Message> MessagesReceived { get; set; }
 
     ////////////////////////////
     // es la misma navigation-property hacia la join-table en AppUser.cs y AppRole.cs

@@ -11,6 +11,7 @@ public class DataContext : DbContext
 
     public DbSet<AppUser> Users { get; set; }
     public DbSet<UserLike> Likes { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
 
 
@@ -33,5 +34,16 @@ public class DataContext : DbContext
                .WithMany(u => u.LikedByUsers)
                .HasForeignKey(ul => ul.TargetUserId)
                .OnDelete(DeleteBehavior.Cascade);
+
+        // ------------     MESSAGE
+        builder.Entity<Message>()
+               .HasOne(m => m.Sender)
+               .WithMany(u => u.MessagesSent)
+               .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Message>()
+               .HasOne(m => m.Recipient)
+               .WithMany(u => u.MessagesReceived)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }
