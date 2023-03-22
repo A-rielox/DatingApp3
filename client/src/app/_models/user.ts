@@ -4,7 +4,7 @@ export interface User {
    photoUrl: string;
    knownAs: string;
    gender: string;
-   // roles: string[];
+   roles: string[];
 }
 
 // cuando es un solo role, no viene en un array, es un puro string
