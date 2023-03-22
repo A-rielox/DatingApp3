@@ -15,6 +15,7 @@
                <i class="fa fa-user"></i>
             </button>
          </li>
+
          <li class="list-inline-item">
             <button (click)="addLike()" class="btn btn-primary">
                <i class="fa fa-heart"></i>
@@ -22,7 +23,11 @@
          </li>
 
          <li class="list-inline-item">
-            <button class="btn btn-primary">
+            <button
+               routerLink="/members/{{ member.userName }}"
+               [queryParams]="{ tab: 'Messages' }"
+               class="btn btn-primary"
+            >
                <i class="fa fa-envelope"></i>
             </button>
          </li>

@@ -61,9 +61,9 @@ public class MessageRepository : IMessageRepository
 
         query = messageParams.Container switch
         {
-            "Inbox" => query.Where(m => m.RecipientUsername == messageParams.Username),
-            "Outbox"=> query.Where(m => m.SenderUsername == messageParams.Username),
-            _       => query.Where(m => m.RecipientUsername == messageParams.Username
+            "Inbox" => query.Where(m => m.RecipientUsername == messageParams.Username && m.RecipientDeleted == false),
+            "Outbox"=> query.Where(m => m.SenderUsername == messageParams.Username && m.SenderDeleted == false),
+            _       => query.Where(m => m.RecipientUsername == messageParams.Username && m.RecipientDeleted == false
                                                             && m.DateRead == null)
         };
 
@@ -87,9 +87,9 @@ public class MessageRepository : IMessageRepository
             .Include(u => u.Sender).ThenInclude(p => p.Photos)
             .Include(u => u.Recipient).ThenInclude(p => p.Photos)
             .Where(
-                m => m.RecipientUsername == currentUserName && /*m.RecipientDeleted == false &&*/
+                m => m.RecipientUsername == currentUserName && m.RecipientDeleted == false &&
                 m.SenderUsername == recipientUserName ||
-                m.RecipientUsername == recipientUserName && /*m.SenderDeleted == false &&*/
+                m.RecipientUsername == recipientUserName && m.SenderDeleted == false &&
                 m.SenderUsername == currentUserName
             )
             .OrderByDescending(m => m.MessageSent)
