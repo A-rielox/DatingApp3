@@ -4,7 +4,6 @@ using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -28,7 +27,7 @@ public class UsersController : BaseApiController
     ////////////////////////////////////////
     ////////////////////////////////////////
     //      GET: api/users/
-    [Authorize]
+    //[Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
     {

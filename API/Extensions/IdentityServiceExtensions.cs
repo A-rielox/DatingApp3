@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using API.Data;
+using API.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -11,6 +14,17 @@ public static class IdentityServiceExtensions
                                         IConfiguration config
                                         )
     {
+        services.AddIdentityCore<AppUser>(opt =>
+        {
+            opt.Password.RequireNonAlphanumeric = false; // no es necesario pero na mas
+        }).AddRoles<AppRole>()
+          .AddRoleManager<RoleManager<AppRole>>()
+          .AddEntityFrameworkStores<DataContext>(); // este es el q crea las tablas relacionadas a Identity
+
+
+
+
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -22,6 +36,16 @@ public static class IdentityServiceExtensions
                     ValidateAudience = false,
                 };
             });
+
+
+
+        //
+        // CONFIFURACION  de las policies p' el acceso
+        services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+        });
 
         return services;
     }

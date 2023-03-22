@@ -1,14 +1,11 @@
 ﻿using API.Entities;
-using System.Security.Cryptography;
 using System.Text.Json;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Data;
 
-/*
 public class Seed
 {
     public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
@@ -42,7 +39,7 @@ public class Seed
 
             user.UserName = user.UserName.ToLower();
 
-            await userManager.CreateAsync(user, "P@ssw0rd"); // este crea y salva el cambio
+            await userManager.CreateAsync(user, "P@ssword1"); // este crea y salva el cambio
             await userManager.AddToRoleAsync(user, "Member");
         }
 
@@ -51,15 +48,15 @@ public class Seed
         {
             UserName = "admin"
         };
-        await userManager.CreateAsync(admin, "P@ssw0rd");
+        await userManager.CreateAsync(admin, "P@ssword1");
         await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
     }
 }
-*/
 
 
 
 
+/*
 public class Seed
 {
     public static async Task SeedUsers(DataContext context)
@@ -74,18 +71,12 @@ public class Seed
 
         foreach (var user in users)
         {
-            using var hmac = new HMACSHA512();
-
             user.UserName = user.UserName.ToLower();
 
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("P@ssword1"));
-            user.PasswordSalt = hmac.Key;
-
             context.Users.Add(user);
-
         }
 
         await context.SaveChangesAsync();
     }
 }
-
+*/
