@@ -61,6 +61,10 @@ app.UseAuthorization();
 
 
 
+// entre UseAuthorization y MapControllers
+app.UseDefaultFiles();
+
+
 
 app.MapControllers();
 
