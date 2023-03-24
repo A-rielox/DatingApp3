@@ -19,7 +19,7 @@
                   <div class="header">
                      <small class="text-muted">
                         <span class="fa fa-clock-o">{{
-                           message.messageSent + "Z" | date
+                           message.messageSent | date
                         }}</span>
                         <span
                            class="text-danger"
@@ -35,7 +35,7 @@
                               message.dateRead &&
                               message.senderUsername !== username
                            "
-                           >(read {{ message.dateRead + "Z" | date }})</span
+                           >(read {{ message.dateRead | date }})</span
                         >
                      </small>
                   </div>
