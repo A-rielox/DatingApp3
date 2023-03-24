@@ -136,4 +136,17 @@ public class UserRepository : IUserRepository
     {
         _context.Entry(user).State = EntityState.Modified;
     }
+
+
+    ////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    //
+    public async Task<string> GetUserGender(string username)
+    {
+        var gender = await _context.Users.Where(u => u.UserName == username)
+                                         .Select(u => u.Gender)
+                                         .FirstOrDefaultAsync();
+
+        return gender;
+    }
 }
