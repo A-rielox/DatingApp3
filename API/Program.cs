@@ -63,10 +63,13 @@ app.UseAuthorization();
 
 // entre UseAuthorization y MapControllers
 app.UseDefaultFiles();
+app.UseStaticFiles();
 
 
 
 app.MapControllers();
+// para el FallbackController
+app.MapFallbackToController("Index", "Fallback");
 
 
 
