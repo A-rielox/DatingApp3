@@ -39,6 +39,9 @@ public class Seed
 
             user.UserName = user.UserName.ToLower();
 
+            user.Created = DateTime.SpecifyKind(user.Created, DateTimeKind.Utc);
+            user.LastActive = DateTime.SpecifyKind(user.LastActive, DateTimeKind.Utc);
+
             await userManager.CreateAsync(user, "P@ssword1"); // este crea y salva el cambio
             await userManager.AddToRoleAsync(user, "Member");
         }
