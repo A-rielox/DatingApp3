@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace API.Helpers;
 
+// en BaseApiController pongo la anotation [ServiceFilter(typeof(LogUserActivity))]
+// pongo services.AddScoped<LogUserActivity>(); en ApplicationServiceExtension.cs
 public class LogUserActivity : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
